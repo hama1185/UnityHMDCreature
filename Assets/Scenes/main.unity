@@ -449,8 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parasiteTime: 10
-  volUpDeltaTime: 10
-  pitchUpDeltaTime: 10
+  volUpDeltaTime: 0.5
+  pitchUpDeltaTime: 0.5
   hangerTime: 50
   _Client: {fileID: 48709453}
 --- !u!1001 &2017688024
