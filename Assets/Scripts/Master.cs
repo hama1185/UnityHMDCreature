@@ -26,10 +26,12 @@ public class Master : MonoBehaviour
 
     public bool audioSendFlag = false;
 
-    public GameObject _Client;
+    public GameObject _Client,_Hanger;
     Client client;
+    HangerController hanger;
     void Awake(){
         client = _Client.GetComponent<Client>();
+        hanger = _Hanger.GetComponent<HangerController>();
     }
 
     // 起動時処理
@@ -72,6 +74,7 @@ public class Master : MonoBehaviour
                 .Subscribe(_ =>
                 {
                     // ハンガー反射デバイス起動
+                    hanger.act();
                 }
                 ).AddTo(this);
             }
