@@ -55,6 +55,7 @@ public class Master : MonoBehaviour
                 .Subscribe(_ =>
                 {
                     client.SendPitchUp();
+                    Debug.Log("a");
                 }
                 ).AddTo(this);
 
@@ -65,10 +66,7 @@ public class Master : MonoBehaviour
                     // ハンガー反射デバイス起動
                 }
                 ).AddTo(this);
-
-
             }
-            ).AddTo(this);
-        
+            ).AddTo(this);    
     }
 }
