@@ -24,6 +24,8 @@ public class Master : MonoBehaviour
     [SerializeField]
     int hangerTime = 50;
 
+    public bool audioSendFlag = false;
+
     public GameObject _Client;
     Client client;
     void Awake(){
@@ -39,11 +41,17 @@ public class Master : MonoBehaviour
         Observable.Timer(System.TimeSpan.FromSeconds(parasiteTime))
             .Subscribe(_ =>
             {
+                
                 // 音の再生
                 client.SendStart(1);
 
-                // 音のボリューム設定
+                // 終了条件の設定
+                var endFlag = Observable.EveryUpdate()
+                .Where(_ => audioSendFlag);
+
+                // 音のボリューム設定 
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(volUpDeltaTime))
+                .TakeUntil(endFlag)
                 .Subscribe(_ =>
                 {
                     client.SendVolUp();
@@ -52,10 +60,10 @@ public class Master : MonoBehaviour
 
                 // 音のピッチ設定
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(pitchUpDeltaTime))
+                .TakeUntil(endFlag)
                 .Subscribe(_ =>
                 {
                     client.SendPitchUp();
-                    Debug.Log("a");
                 }
                 ).AddTo(this);
 
