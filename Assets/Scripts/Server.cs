@@ -23,6 +23,11 @@ public class Server : MonoBehaviour {
 
     public float volume;
     public float pitch;
+
+    float maxVol = 1.5f;
+    float maxPitch = 1.5f;
+    float minVol = 0.0f;
+    float minPitch = 0.5f;
     
     void Awake() {
         serverName = "VP2";
@@ -97,10 +102,10 @@ public class Server : MonoBehaviour {
                     
                     if(!volFlag){
                         float value = (float)item.Value.packets[lastPacketIndex].Data[0];
-                        if(value > 0){
+                        if(value > 0 && volume < maxVol){
                             volume += 0.01f;
                         }
-                        else{
+                        else if(value < 0 && pitch > minVol){
                             volume -= 0.01f;
                         }
                         volFlag = true;
@@ -111,10 +116,10 @@ public class Server : MonoBehaviour {
                     
                     if(!pitchFlag){
                         float value = (float)item.Value.packets[lastPacketIndex].Data[0];
-                        if(value > 0){
+                        if(value > 0 && pitch < maxPitch){
                             pitch += 0.01f;
                         }
-                        else{
+                        else if(value < 0 && pitch > minPitch){
                             pitch -= 0.01f;
                         }
                         pitchFlag = true;
