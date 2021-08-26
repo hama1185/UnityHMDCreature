@@ -91,6 +91,7 @@ public class Server : MonoBehaviour {
                         pitchFlag = false;
                     }
                 }
+                // 上限の設定
 
                 else if(address.Contains("/Vol")){
                     
