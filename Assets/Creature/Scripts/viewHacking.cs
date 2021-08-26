@@ -7,14 +7,10 @@ using UnityEngine.UI;
 public class viewHacking : MonoBehaviour
 {
     OVRPassthroughLayer passthroughLayer;
-    private float alpha = 0.0f;
-    private float brightness = 0.0f;
     public Text text;
     public Text edgerenderText;
-    bool edgeRendering = false;
-    bool changing = false;
+    bool changing = true;
     float time = 0.0f;
-
 
     void Start()
     {
@@ -33,11 +29,11 @@ public class viewHacking : MonoBehaviour
 
         passthroughLayer.SetColorMapControls(0.7f, 0.0f, 0.0f, makeGradient(Color.black,Color.white));
 
-
     }
 
     void Update()
     {
+        /*
         if(edgeRendering){
             passthroughLayer.edgeRenderingEnabled = true;
             edgerenderText.text = "EdgeRender: ON";
@@ -45,47 +41,16 @@ public class viewHacking : MonoBehaviour
             passthroughLayer.edgeRenderingEnabled = false;
             edgerenderText.text = "EdgeRender: OFF";
         }
+        */
         time += Time.deltaTime;
-        float T = 60.0f;
-        float f = 1.0f / T;
-        if(changing){
-            if(time < 30.0f){
-                Color a = Color.black;
-                //Color a = Color.Lerp(Color.black, Color.green, time/30.0f);
-                Color b = Color.Lerp(Color.white, Color.blue, time/30.0f);
-                passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
-                //Color a = Color.Lerp(Color.black, Color.black, time/60.0f);
-                //Color b = Color.Lerp(Color.white, Color.white, time/60.0f);
-
-                //passthroughLayer.SetColorMapControls(1.0f, 0.0f, 0.0f);
-                //passthroughLayer.edgeRenderingEnabled = true;
-                //Color col = new Color(0, 1, 0, 1);
-                //passthroughLayer.edgeColor = col;
-                //alpha = Mathf.Abs(Mathf.Sin(2 * Mathf.PI * f * Time.time) * 0.3f);
-            } else{ 
-                Color a = Color.black;
-                //Color a = Color.Lerp(Color.black, Color.green, 1.0f);
-                Color b = Color.Lerp(Color.white, Color.blue, 1.0f);
-
-                //passthroughLayer.SetColorMapControls(1.0f, 0.0f, 0.0f);
-                //passthroughLayer.edgeRenderingEnabled = true;
-                //Color col = new Color(0, 1, 0, 1);
-                //passthroughLayer.edgeColor = col;
-                passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
-            }
-        }
+        viewHack(); //時間経過で視界変化
         text.text = "Time: " + time;
-        //passthroughLayer.SetColorMap(col.r, col.g, col.b, col.a);
-        //passthroughLayer.colorMapEditorContrast = 1.0f;
-        //passthroughLayer.colorMapEditorBrightness = 0.0f;
-        //passthroughLayer.colorMapEditorPosterize = 0.0f;
     }
 
     public void OnButtonClick(){
         //edgeRendering = !edgeRendering;
         time = 0.0f;
         changing = true;
-        
     }
 
     private Gradient makeGradient(Color a, Color b){
@@ -110,7 +75,21 @@ public class viewHacking : MonoBehaviour
         gradient.SetKeys(colorKey, alphaKey);
 
         return gradient;
+    }
 
-
+    void viewHack(){
+        float T = 60.0f; 
+        float f = 1.0f / T;
+        if(changing){
+            if(time < T/2){ //スタートからT/2の時間をかけて変化する
+                Color a = Color.black;
+                Color b = Color.Lerp(Color.white, Color.blue, time/30.0f);
+                passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
+            } else{  //それ以降は変化しない
+                Color a = Color.black;
+                Color b = Color.Lerp(Color.white, Color.blue, 1.0f);
+                passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
+            }
+        }
     }
 }
