@@ -18,7 +18,7 @@ public class Client : MonoBehaviour
         IpGetter ipGetter = new IpGetter();
         string myIP = ipGetter.GetIp();
         //ここにServer(PC)のIPアドレス
-        ip = "192.168.1.130";
+        ip = "192.168.11.7";
         port = 8000;
         Debug.Log("client IP : " + ip + "   port : " + port);
 
