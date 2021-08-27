@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Oculus/VR/Scenes/ControllerModels.unity
     guid: 39cfe7aa0a2d46c47994d8d0308ec663
-  - enabled: 1
+  - enabled: 0
     path: Assets/Creature/Scenes/main_path.unity
     guid: 9afeada2bbd240b4981cfb6abb525418
   - enabled: 0
@@ -18,8 +18,17 @@ EditorBuildSettings:
     path: Assets/Oculus/SampleFramework/Usage/Passthrough.unity
     guid: 58e5fc2486c774a4e88ac76261268d52
   - enabled: 0
-    path: Assets/Oculus/SampleFramework/Usage/Passthrough/Scenes/SurfaceProjectedPassthrough.unity
+    path: Assets/Scenes/temp.unity
     guid: e36011c54ca6d994c94449356fa5cee6
+  - enabled: 0
+    path: Assets/Scenes/main.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/main_WIP.unity
+    guid: 8e421c060c2300049a168defd04a57bd
+  - enabled: 1
+    path: Assets/Scenes/test.unity
+    guid: 698c56db7f615834881cf3fad4dae4b5
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 51f4d37f410f9c04cb429edf26ba6fc1, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8eb40a2d89144bc45903b1d7c87553fb, type: 2}

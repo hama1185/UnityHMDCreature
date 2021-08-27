@@ -30,12 +30,14 @@ public class Master : MonoBehaviour
 
     public bool audioSendFlag = false;
 
-    public GameObject _Client,_Hanger;
+    public GameObject _Client,_Hanger, _ViewHack;
     Client client;
     HangerController hanger;
+    ViewHacking view;
     void Awake(){
         client = _Client.GetComponent<Client>();
         hanger = _Hanger.GetComponent<HangerController>();
+        view = _ViewHack.GetComponent<ViewHacking>();
     }
 
     // 起動時処理
@@ -75,11 +77,21 @@ public class Master : MonoBehaviour
 
 
                 // 色の変更
+                /*
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(changeColorDeltaTime))
                 .TakeUntil(endFlag)
                 .Subscribe(_ =>
                 {
                     // 色が徐々に変わっていく処理
+                }
+                ).AddTo(this);
+                */
+                Observable.Interval(System.TimeSpan.FromSeconds(changeColorDeltaTime))
+                .TakeUntil(endFlag)
+                .Subscribe(l =>
+                {
+                    // 色が徐々に変わっていく処理
+                    view.viewHack(l);
                 }
                 ).AddTo(this);
 
