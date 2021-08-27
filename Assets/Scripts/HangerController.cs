@@ -119,7 +119,7 @@ public class HangerController : MonoBehaviour
 
     //モータを停止する
     public void stop_motor(){
-        data = Encoding.UTF8.GetBytes("000,000,000,000,000,000,000,000,000,000,000,000,");
+        data = Encoding.UTF8.GetBytes("000,000,000,000,255,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
     }
 
