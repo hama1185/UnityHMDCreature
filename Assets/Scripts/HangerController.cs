@@ -101,19 +101,19 @@ public class HangerController : MonoBehaviour
 
     //バルーンすべて萎む
     public void emit(){
-        data = Encoding.UTF8.GetBytes("999,999,256,256,256,256,000,000,000,000,000,000,");
+        data = Encoding.UTF8.GetBytes("999,999,000,000,255,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
     }
 
     //バルーン1のペア膨らむ　バルーン2のペア萎む
     public void pump_bal1_emit_bal2(){
-        data = Encoding.UTF8.GetBytes("350,999,128,255,000,255,000,000,000,000,000,000,");
+        data = Encoding.UTF8.GetBytes("350,999,255,000,000,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
     }
 
     //バルーン2のペア膨らむ　バルーン1のペア萎む
     public void pump_bal2_emit_bal1(){
-        data = Encoding.UTF8.GetBytes("999,350,255,128,255,000,000,000,000,000,000,000,");
+        data = Encoding.UTF8.GetBytes("999,350,000,255,255,000,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
     }
 
