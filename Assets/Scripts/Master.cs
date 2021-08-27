@@ -91,6 +91,10 @@ public class Master : MonoBehaviour
                     audioSendFlag = true;
                     // ハンガー反射デバイス起動
                     hanger.act();
+
+                    // headangle取得するスクリプトのflagを変える
+                    // イベントを起動させる
+                    // 生物を倒すことのコールバックが来たら終盤の設定を起動する
                 }
                 ).AddTo(this);
             }
