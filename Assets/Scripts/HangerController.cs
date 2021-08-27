@@ -31,6 +31,11 @@ public class HangerController : MonoBehaviour
     //駆動状態・次の駆動を決定
     private int state=0;
 
+    //セーフティ用
+    private int count1,count2=0;
+    private bool driving1=false,driving2=false;
+    private int cur1=0,cur2=0;
+
     // Use this for initialization
     void Start()
     {
@@ -48,6 +53,28 @@ public class HangerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //各モータの駆動時（膨張時）、60フレーム毎に気圧値を確認して
+        //気圧センサに異常があるときはモータを停止する
+        if(driving1){
+            count1++;
+            if(count1>60 && cur1<100){
+                stop_motor();
+            }else{
+                count1=0;
+            }
+        }
+        else if(driving2){
+            count2++;
+            if(count2>60 && cur2<100){
+                stop_motor();
+            }else{
+                count2=0;
+            }
+        }
+        else{
+            count1=0;
+            count2=0;
+        }
     }
 
     //呼び出した回数に応じて異なる駆動＝ストーリーラインに準ずる
@@ -97,30 +124,41 @@ public class HangerController : MonoBehaviour
     public void pump(){
         data = Encoding.UTF8.GetBytes("350,350,128,128,000,000,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
+        driving1=true;
+        driving2=true;
     }
 
     //バルーンすべて萎む
     public void emit(){
         data = Encoding.UTF8.GetBytes("999,999,000,000,255,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
+        driving1=false;
+        driving2=false;
     }
 
     //バルーン1のペア膨らむ　バルーン2のペア萎む
     public void pump_bal1_emit_bal2(){
         data = Encoding.UTF8.GetBytes("350,999,255,000,000,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
+        driving1=true;
+        driving2=false;
     }
 
     //バルーン2のペア膨らむ　バルーン1のペア萎む
     public void pump_bal2_emit_bal1(){
         data = Encoding.UTF8.GetBytes("999,350,000,255,255,000,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
+        driving1=false;
+        driving2=true;
     }
 
     //モータを停止する
     public void stop_motor(){
         data = Encoding.UTF8.GetBytes("000,000,000,000,255,255,000,000,000,000,000,000,");
         udp.BeginSend(data, data.Length, remoteEP2, new AsyncCallback(send), udp);
+        driving1=false;
+        driving2=false;
+        Debug.LogError("[Hanger]motor stopped for any error");
     }
 
     //==========================================
@@ -174,5 +212,8 @@ public class HangerController : MonoBehaviour
         udp.BeginReceive(new AsyncCallback(recv), null);
         recvData = Encoding.UTF8.GetString(received);
         //Debug.Log(recvData);
+        string[] arr = recvData.Split(',');
+        cur1=int.Parse(arr[2]);
+        cur2=int.Parse(arr[3]);
     }
 }
