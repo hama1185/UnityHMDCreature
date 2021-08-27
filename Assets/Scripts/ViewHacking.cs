@@ -50,13 +50,13 @@ public class ViewHacking : MonoBehaviour
         return gradient;
     }
     public void viewHack(float t){
-        if(t < 90.0f){
+        if(t < 100.0f){
             Color a = Color.black;
-            Color b = Color.Lerp(Color.white, Color.blue, t/90.0f);
+            Color b = Color.Lerp(Color.white, Color.blue, t/100.0f);
             passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
         } else {
             Color a = Color.black;
-            Color b = Color.Lerp(Color.blue, Color.white, (t-90.0f)/90.0f);
+            Color b = Color.Lerp(Color.blue, Color.white, (t-100.0f)/100.0f);
             passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
         }
     }

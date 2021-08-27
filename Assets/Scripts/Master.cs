@@ -77,23 +77,16 @@ public class Master : MonoBehaviour
 
 
                 // 色の変更
-                /*
+                
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(changeColorDeltaTime))
                 .TakeUntil(endFlag)
-                .Subscribe(_ =>
+                .Subscribe(x =>
                 {
                     // 色が徐々に変わっていく処理
+                    view.viewHack(x);
                 }
                 ).AddTo(this);
-                */
-                Observable.Interval(System.TimeSpan.FromSeconds(changeColorDeltaTime))
-                .TakeUntil(endFlag)
-                .Subscribe(l =>
-                {
-                    // 色が徐々に変わっていく処理
-                    view.viewHack(l);
-                }
-                ).AddTo(this);
+                
 
                 // ハンガースタートする設定
                 Observable.Timer(System.TimeSpan.FromSeconds(hangerTime))
