@@ -20,6 +20,10 @@ public class Master : MonoBehaviour
     [SerializeField]
     float pitchUpDeltaTime = 0.5f;
 
+    // 色が変わる間隔時間
+    [SerializeField]
+    float changeColorDeltaTime = 0.5f;
+
     // ハンガーが始まる時間
     [SerializeField]
     int hangerTime = 50;
@@ -69,6 +73,16 @@ public class Master : MonoBehaviour
                 }
                 ).AddTo(this);
 
+
+                // 色の変更
+                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(changeColorDeltaTime))
+                .TakeUntil(endFlag)
+                .Subscribe(_ =>
+                {
+                    // 色が徐々に変わっていく処理
+                }
+                ).AddTo(this);
+
                 // ハンガースタートする設定
                 Observable.Timer(System.TimeSpan.FromSeconds(hangerTime))
                 .Subscribe(_ =>
@@ -80,6 +94,6 @@ public class Master : MonoBehaviour
                 }
                 ).AddTo(this);
             }
-            ).AddTo(this);    
+            ).AddTo(this);
     }
 }
