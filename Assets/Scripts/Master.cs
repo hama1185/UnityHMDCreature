@@ -73,6 +73,8 @@ public class Master : MonoBehaviour
                 Observable.Timer(System.TimeSpan.FromSeconds(hangerTime))
                 .Subscribe(_ =>
                 {
+                    // 音楽の変化をやめる
+                    audioSendFlag = true;
                     // ハンガー反射デバイス起動
                     hanger.act();
                 }
