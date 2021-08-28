@@ -46,10 +46,10 @@ public class Client : MonoBehaviour
     }
 
     // sendSpaceで重複しないようにする
-    public void SendVolUp(){
+    public void SendUp(){
         SendSpace(0);
 
-        address = "/Vol";
+        address = "/Change";
         List<float> sendAudioList = new List<float>();
         sendAudioList.Add(1);
         StartCoroutine(DelayCoroutine(1, () =>
@@ -59,10 +59,10 @@ public class Client : MonoBehaviour
         }));
     }
 
-    public void SendVolDown(){
+    public void SendDown(){
         SendSpace(0);
 
-        address = "/Vol";
+        address = "/Change";
         List<float> sendAudioList = new List<float>();
         sendAudioList.Add(-1);
         StartCoroutine(DelayCoroutine(1, () =>
@@ -70,33 +70,6 @@ public class Client : MonoBehaviour
             // 1F後に処理
             OSCHandler.Instance.SendMessageToClient(id, address, sendAudioList);
         }));
-    }
-
-    public void SendPitchUp(){
-        SendSpace(1);
-
-        address = "/Pitch";
-        List<float> sendAudioList = new List<float>();
-        sendAudioList.Add(1);
-        StartCoroutine(DelayCoroutine(1, () =>
-        {
-            // 1F後に処理
-            OSCHandler.Instance.SendMessageToClient(id, address, sendAudioList);
-        }));
-    }
-
-    public void SendPitchDown(){
-        SendSpace(1);
-
-        address = "/Pitch";
-        List<float> sendAudioList = new List<float>();
-        sendAudioList.Add(-1);
-        StartCoroutine(DelayCoroutine(1, () =>
-        {
-            // 1F後に処理
-            OSCHandler.Instance.SendMessageToClient(id, address, sendAudioList);
-        }));
-
     }
 
     public void SendSpace(int add){
