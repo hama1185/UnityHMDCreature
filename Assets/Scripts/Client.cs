@@ -17,8 +17,8 @@ public class Client : MonoBehaviour
     void Awake() {
         IpGetter ipGetter = new IpGetter();
         string myIP = ipGetter.GetIp();
-
-        ip = "192.168.1.130";
+        //ここにServer(PC)のIPアドレス
+        ip = "192.168.11.7";
         port = 8000;
         Debug.Log("client IP : " + ip + "   port : " + port);
 
