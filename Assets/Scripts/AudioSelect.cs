@@ -15,12 +15,17 @@ public class AudioSelect : MonoBehaviour
 
     float beforetype = 0;
     bool changeFlag = false;
+
+    float basevol;
+    float basepitch;
     
     void Start()
     {
         sounds = GetComponents<AudioSource>();
         server = Server.GetComponent<Server>();
-
+        // awakeで値を代入してるので大丈夫
+        basevol = server.volume;
+        basepitch = server.pitch;
     }
 
     void Update()
@@ -53,6 +58,10 @@ public class AudioSelect : MonoBehaviour
             default:
             
             break;
+        }
+        // 止めるときはまた別の処理
+        if(basevol != server.volume && basepitch != server.pitch && server.type == 0){
+            server.type = 1;
         }
 
         Main.SetFloat("vol",ConvertVolume2dB(server.volume));
