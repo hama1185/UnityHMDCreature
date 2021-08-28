@@ -14,8 +14,9 @@ public class Server : MonoBehaviour {
 	#endregion //----------追記
 
     public bool playFlag = false;
-    public bool volFlag = false;
-    public bool pitchFlag = false;    
+    // public bool volFlag = false;
+    // public bool pitchFlag = false; 
+    public bool changeFlag = false;   
 
     public int type = 0;
 
@@ -86,43 +87,59 @@ public class Server : MonoBehaviour {
                 }
 
                 else if(address.Contains("/Space")){
-                    
-                    float add = (float)item.Value.packets[lastPacketIndex].Data[0];
-                    // 0ならvol 1ならpitch
-                    if(add == 0){
-                        volFlag = false;
-                    }
-                    else{
-                        pitchFlag = false;
-                    }
+                    changeFlag = false;
+                    // float add = (float)item.Value.packets[lastPacketIndex].Data[0];
+                    // // 0ならvol 1ならpitch
+                    // if(add == 0){
+                    //     volFlag = false;
+                    // }
+                    // else{
+                    //     pitchFlag = false;
+                    // }
                 }
                 // 上限の設定
 
-                else if(address.Contains("/Vol")){
+                // else if(address.Contains("/Vol")){
                     
-                    if(!volFlag){
-                        float value = (float)item.Value.packets[lastPacketIndex].Data[0];
-                        if(value > 0 && volume < maxVol){
-                            volume += 0.01f;
-                        }
-                        else if(value < 0 && pitch > minVol){
-                            volume -= 0.01f;
-                        }
-                        volFlag = true;
-                    }
-                }
+                //     if(!volFlag){
+                //         float value = (float)item.Value.packets[lastPacketIndex].Data[0];
+                //         if(value > 0 && volume < maxVol){
+                //             volume += 0.01f;
+                //         }
+                //         else if(value < 0 && pitch > minVol){
+                //             volume -= 0.01f;
+                //         }
+                //         volFlag = true;
+                //     }
+                // }
 
-                else if(address.Contains("/Pitch")){
+                // else if(address.Contains("/Pitch")){
                     
-                    if(!pitchFlag){
+                //     if(!pitchFlag){
+                //         float value = (float)item.Value.packets[lastPacketIndex].Data[0];
+                //         if(value > 0 && pitch < maxPitch){
+                //             pitch += 0.01f;
+                //         }
+                //         else if(value < 0 && pitch > minPitch){
+                //             pitch -= 0.01f;
+                //         }
+                //         pitchFlag = true;
+                //     }
+                // }
+
+                else if(address.Contains("/Change")){
+                    
+                    if(!changeFlag){
                         float value = (float)item.Value.packets[lastPacketIndex].Data[0];
                         if(value > 0 && pitch < maxPitch){
                             pitch += 0.01f;
+                            volume += 0.01f;
                         }
                         else if(value < 0 && pitch > minPitch){
                             pitch -= 0.01f;
+                            volume -= 0.01f;
                         }
-                        pitchFlag = true;
+                        changeFlag = true;
                     }
                 }
 

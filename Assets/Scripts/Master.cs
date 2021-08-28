@@ -57,24 +57,14 @@ public class Master : MonoBehaviour
                 var endFlag = Observable.EveryUpdate()
                 .Where(_ => audioSendFlag);
 
-                // 音のボリューム設定 
+                // 音のアップ設定 
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(volUpDeltaTime))
                 .TakeUntil(endFlag)
                 .Subscribe(_ =>
                 {
-                    client.SendVolUp();
+                    client.SendUp();
                 }
                 ).AddTo(this);
-
-                // 音のピッチ設定
-                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(pitchUpDeltaTime))
-                .TakeUntil(endFlag)
-                .Subscribe(_ =>
-                {
-                    client.SendPitchUp();
-                }
-                ).AddTo(this);
-
 
                 // 色の変更
                 
