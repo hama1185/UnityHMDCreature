@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 // UniRxの参照
 using UniRx;
+using System;
 
 // このスクリプトでこのプロジェクトを管理する
 
@@ -37,7 +38,11 @@ public class Master : MonoBehaviour
     void Awake(){
         client = _Client.GetComponent<Client>();
         hanger = _Hanger.GetComponent<HangerController>();
-        view = _ViewHack.GetComponent<ViewHacking>();
+        try{
+            view = _ViewHack.GetComponent<ViewHacking>();
+        }catch(UnassignedReferenceException e){
+            Debug.Log(e);
+        }
     }
 
     // 起動時処理
@@ -57,24 +62,14 @@ public class Master : MonoBehaviour
                 var endFlag = Observable.EveryUpdate()
                 .Where(_ => audioSendFlag);
 
-                // 音のボリューム設定 
+                // 音のアップ設定 
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(volUpDeltaTime))
                 .TakeUntil(endFlag)
                 .Subscribe(_ =>
                 {
-                    client.SendVolUp();
+                    client.SendUp();
                 }
                 ).AddTo(this);
-
-                // 音のピッチ設定
-                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(pitchUpDeltaTime))
-                .TakeUntil(endFlag)
-                .Subscribe(_ =>
-                {
-                    client.SendPitchUp();
-                }
-                ).AddTo(this);
-
 
                 // 色の変更
                 
@@ -83,7 +78,11 @@ public class Master : MonoBehaviour
                 .Subscribe(x =>
                 {
                     // 色が徐々に変わっていく処理
-                    view.viewHack(x);
+                    try{
+                        view.viewHack(x);
+                    }catch(NullReferenceException){
+                        
+                    }
                 }
                 ).AddTo(this);
                 
