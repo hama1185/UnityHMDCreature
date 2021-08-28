@@ -23,16 +23,16 @@ public class test : MonoBehaviour
     }
 
     public void onVolupButtonClick(){
-        client.SendVolUp();
+        client.SendUp();
     }
     public void onVoldownButtonClick(){
-        client.SendVolDown();
+        client.SendDown();
     }
 
     public void onPitchupButtonClick(){
-        client.SendPitchUp();
+        client.SendUp();
     }
     public void onPitchdownButtonClick(){
-        client.SendPitchDown();
+        client.SendDown();
     }
 }
