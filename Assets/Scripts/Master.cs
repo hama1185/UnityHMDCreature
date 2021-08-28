@@ -80,7 +80,7 @@ public class Master : MonoBehaviour
                     // 色が徐々に変わっていく処理
                     try{
                         view.viewHack(x);
-                    }catch(NullReferenceException e){
+                    }catch(NullReferenceException){
                         
                     }
                 }
