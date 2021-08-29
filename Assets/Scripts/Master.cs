@@ -116,7 +116,7 @@ public class Master : MonoBehaviour
         if(headAngle.firstHangerFlag){
             if(!testFlag){
                 hanger.act();
-                Observable.Timer(System.TimeSpan.FromSeconds(15.0f))
+                Observable.Timer(System.TimeSpan.FromSeconds(3.0f))
                 .Subscribe(_ =>
                 {
                     // フラグを起動
