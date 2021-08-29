@@ -31,10 +31,11 @@ public class Master : MonoBehaviour
 
     public bool audioSendFlag = false;
 
-    public GameObject _Client,_Hanger, _ViewHack;
+    public GameObject _Client, _Hanger, _ViewHack, _Head;
     Client client;
     HangerController hanger;
     ViewHacking view;
+    headAngleControl headAngle;
     void Awake(){
         client = _Client.GetComponent<Client>();
         hanger = _Hanger.GetComponent<HangerController>();
@@ -43,6 +44,7 @@ public class Master : MonoBehaviour
         }catch(UnassignedReferenceException e){
             Debug.Log(e);
         }
+        headAngle = _Head.GetComponent<headAngleControl>();
     }
 
     // 起動時処理
@@ -95,6 +97,8 @@ public class Master : MonoBehaviour
                     audioSendFlag = true;
                     // ハンガー反射デバイス起動
                     hanger.act();
+                    // フラグを起動
+                    headAngle.hangerLeftFlag = true;
 
                     // headangle取得するスクリプトのflagを変える
                     // イベントを起動させる
@@ -103,5 +107,28 @@ public class Master : MonoBehaviour
                 ).AddTo(this);
             }
             ).AddTo(this);
+    }
+
+    void Update(){
+        if(headAngle.firstHangerFlag){
+            hanger.act();
+            Observable.Timer(System.TimeSpan.FromSeconds(3.0f))
+                .Subscribe(_ =>
+                {
+                    // ハンガー反射デバイス起動
+                    hanger.act();
+                    // フラグを起動
+                    headAngle.hangerLeftFlag = false;
+                    headAngle.hangerRightFlag = true;
+                }
+                ).AddTo(this);
+            headAngle.firstHangerFlag = false;
+        }
+
+        if(headAngle.secondHangerFlag){
+            hanger.act();
+            headAngle.hangerRightFlag = false;
+            headAngle.secondHangerFlag = false;
+        }
     }
 }
