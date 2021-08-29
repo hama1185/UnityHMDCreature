@@ -36,6 +36,8 @@ public class Master : MonoBehaviour
     HangerController hanger;
     ViewHacking view;
     headAngleControl headAngle;
+
+    bool testFlag = false;
     void Awake(){
         client = _Client.GetComponent<Client>();
         hanger = _Hanger.GetComponent<HangerController>();
@@ -110,19 +112,24 @@ public class Master : MonoBehaviour
     }
 
     void Update(){
+        
         if(headAngle.firstHangerFlag){
-            hanger.act();
-            Observable.Timer(System.TimeSpan.FromSeconds(3.0f))
+            if(!testFlag){
+                hanger.act();
+                Observable.Timer(System.TimeSpan.FromSeconds(15.0f))
                 .Subscribe(_ =>
                 {
-                    // ハンガー反射デバイス起動
-                    hanger.act();
                     // フラグを起動
                     headAngle.hangerLeftFlag = false;
                     headAngle.hangerRightFlag = true;
+                    // ハンガー反射デバイス起動
+                    hanger.act();
                 }
                 ).AddTo(this);
+                testFlag = true;
+            }
             headAngle.firstHangerFlag = false;
+            // 後で3にする
         }
 
         if(headAngle.secondHangerFlag){
@@ -130,5 +137,6 @@ public class Master : MonoBehaviour
             headAngle.hangerRightFlag = false;
             headAngle.secondHangerFlag = false;
         }
+        
     }
 }

@@ -9,6 +9,7 @@ using UnityEngine.XR;
 using System.IO;
 using UnityEditor;
 using System.Collections.Generic;
+using UnityEngine.UI;
 public class HangerController : MonoBehaviour
 {
 
@@ -36,6 +37,7 @@ public class HangerController : MonoBehaviour
     private bool driving1=false,driving2=false;
     private int cur1=0,cur2=0;
 
+    public Text t;
     // Use this for initialization
     void Start()
     {
@@ -94,6 +96,7 @@ public class HangerController : MonoBehaviour
                 emit();
                 break;
             default:
+                t.text = state+"fuck!!!!!!";
                 stop_motor();
                 break;
         }

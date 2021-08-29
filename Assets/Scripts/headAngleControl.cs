@@ -12,6 +12,13 @@ public class headAngleControl : MonoBehaviour
     public bool firstHangerFlag = false;
     public bool secondHangerFlag = false;
 
+    public Text t1;
+    public Text t2;
+    public Text t3;
+    public Text t4;
+    public Text t5;
+
+
     void Start()
     {
         
@@ -22,15 +29,21 @@ public class headAngleControl : MonoBehaviour
     {
         float headangle = ovrCam.transform.localEulerAngles.y;
         if(hangerLeftFlag){
-            if(headangle >=5 && headangle <= 180){
+            if(headangle >=40 && headangle <= 180){
                 firstHangerFlag = true;    
             }
         }
         else if(hangerRightFlag){
-            if(headangle <= 355 && headangle >= 180){
+            if(headangle <= 320 && headangle >= 180){
                 secondHangerFlag = true;
             }
         }
+        
+        t1.text = hangerLeftFlag.ToString(); 
+        t2.text = hangerRightFlag.ToString(); 
+        t3.text = firstHangerFlag.ToString(); 
+        t4.text = secondHangerFlag.ToString(); 
+        t5.text = "Angle: " + headangle.ToString();
         
     }
 }
