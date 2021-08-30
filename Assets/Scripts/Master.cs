@@ -9,6 +9,10 @@ using System;
 
 public class Master : MonoBehaviour
 {
+    // ブラックアウトするまでの時間
+    [SerializeField]
+    int blackoutTime = 7;
+
     // 寄生されるまでの時間
     [SerializeField]
     int parasiteTime = 10;
@@ -53,6 +57,13 @@ public class Master : MonoBehaviour
     void Start()
     {
         // 序盤の設定
+        //設定時間後にブラックアウト
+        Observable.Timer(System.TimeSpan.FromSeconds(blackoutTime))
+            .Subscribe(_ =>
+            {
+                view.blackOut();
+            }
+            ).AddTo(this);
 
         // 設定時間後に起動
         Observable.Timer(System.TimeSpan.FromSeconds(parasiteTime))

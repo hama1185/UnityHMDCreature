@@ -7,8 +7,12 @@ public class ViewHacking : MonoBehaviour
     OVRPassthroughLayer passthroughLayer;
     bool changing = true;
     float time = 0.0f;
+    //public AudioClip nurunuru;
+    //AudioSource audioSource;
     void Start()
     {
+        //audioSource = gameObject.GetComponent<AudioSource>();
+        //audioSource.clip = nurunuru;
         GameObject ovrCameraRig = GameObject.Find("OVRCameraRig");
         if (ovrCameraRig == null)
         {
@@ -21,6 +25,7 @@ public class ViewHacking : MonoBehaviour
             Debug.LogError("OVRCameraRig does not contain an OVRPassthroughLayer component");
         }
         passthroughLayer.SetColorMapControls(0.7f, 0.0f, 0.0f, makeGradient(Color.black,Color.white));
+
     }
     void Update()
     {
@@ -51,13 +56,24 @@ public class ViewHacking : MonoBehaviour
     }
     public void viewHack(float t){
         if(t < 100.0f){
-            Color a = Color.black;
+            //Color a = Color.black;
+            Color a = Color.Lerp(Color.black, Color.red, t/100.0f);
             Color b = Color.Lerp(Color.white, Color.blue, t/100.0f);
             passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
         } else {
-            Color a = Color.black;
+            //Color a = Color.black;
+            Color a = Color.Lerp(Color.red, Color.black, (t-100.0f)/100.0f);
             Color b = Color.Lerp(Color.blue, Color.white, (t-100.0f)/100.0f);
             passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(a,b));
         }
     }
+
+    public void blackOut(){
+        passthroughLayer.SetColorMapControls(0.7f, 0.3f, 0.0f, makeGradient(Color.black,Color.black));
+    }
+    /*
+    public void startHackingSound(){
+        audioSource.Play();
+    }
+    */
 }
