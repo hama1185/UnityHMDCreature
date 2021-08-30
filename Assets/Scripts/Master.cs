@@ -129,7 +129,6 @@ public class Master : MonoBehaviour
                 testFlag = true;
             }
             headAngle.firstHangerFlag = false;
-            // 後で3にする
         }
 
         if(headAngle.secondHangerFlag){
