@@ -30,12 +30,14 @@ public class headAngleControl : MonoBehaviour
         float headangle = ovrCam.transform.localEulerAngles.y;
         if(hangerLeftFlag){
             if(headangle >=40 && headangle <= 180){
-                firstHangerFlag = true;    
+                firstHangerFlag = true;  
+                hangerLeftFlag = false;  
             }
         }
         else if(hangerRightFlag){
             if(headangle <= 320 && headangle >= 180){
                 secondHangerFlag = true;
+                hangerRightFlag = false;
             }
         }
         
