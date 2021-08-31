@@ -33,7 +33,12 @@ public class Master : MonoBehaviour
     [SerializeField]
     int hangerTime = 50;
 
+    // 体験が終了するまでの時間
+    [SerializeField]
+    int finishTime = 25;
+
     public bool audioSendFlag = false;
+    public bool finishFlag = false;
 
     public GameObject _Client, _Hanger, _ViewHack, _Head;
     Client client;
@@ -41,7 +46,6 @@ public class Master : MonoBehaviour
     ViewHacking view;
     headAngleControl headAngle;
 
-    bool testFlag = false;
     void Awake(){
         client = _Client.GetComponent<Client>();
         hanger = _Hanger.GetComponent<HangerController>();
@@ -63,7 +67,7 @@ public class Master : MonoBehaviour
             {
                 view.blackOut();
             }
-            ).AddTo(this);
+        ).AddTo(this);
 
         // 設定時間後に起動
         Observable.Timer(System.TimeSpan.FromSeconds(parasiteTime))
@@ -113,40 +117,63 @@ public class Master : MonoBehaviour
                     // フラグを起動
                     headAngle.hangerLeftFlag = true;
 
-                    // headangle取得するスクリプトのflagを変える
-                    // イベントを起動させる
                     // 生物を倒すことのコールバックが来たら終盤の設定を起動する
                 }
                 ).AddTo(this);
             }
-            ).AddTo(this);
+        ).AddTo(this);
     }
 
     void Update(){
         
         if(headAngle.firstHangerFlag){
-            if(!testFlag){
                 hanger.act();
                 Observable.Timer(System.TimeSpan.FromSeconds(3.0f))
                 .Subscribe(_ =>
                 {
-                    // フラグを起動
-                    headAngle.hangerLeftFlag = false;
-                    headAngle.hangerRightFlag = true;
-                    // ハンガー反射デバイス起動
                     hanger.act();
+                    headAngle.hangerRightFlag= true;
                 }
                 ).AddTo(this);
-                testFlag = true;
+
+                headAngle.firstHangerFlag = false;
             }
-            headAngle.firstHangerFlag = false;
-        }
+        
 
         if(headAngle.secondHangerFlag){
             hanger.act();
-            headAngle.hangerRightFlag = false;
+
+            //消えていく処理
+            vanish();
             headAngle.secondHangerFlag = false;
         }
         
+    }
+
+    void vanish(){
+
+        var isFinish = Observable.EveryUpdate()
+                .Where(_ => audioSendFlag);
+
+        
+        Observable.Timer(System.TimeSpan.FromSeconds(finishTime))
+            .Subscribe(_ =>
+            {
+                finishFlag = true;
+            }
+        ).AddTo(this);
+
+        Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(changeColorDeltaTime))
+            .TakeUntil(isFinish)
+            .Subscribe(x =>
+            {
+                // 色が徐々に変わっていく処理
+                try{
+                    view.viewHack(100 - 2* (int)(object)x);
+                }catch(NullReferenceException){
+                    
+                }
+            }
+        ).AddTo(this);
     }
 }
