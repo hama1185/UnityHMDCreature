@@ -33,7 +33,12 @@ public class Master : MonoBehaviour
     [SerializeField]
     int hangerTime = 50;
 
+    // 体験が終了するまでの時間
+    [SerializeField]
+    int finishTime = 25;
+
     public bool audioSendFlag = false;
+    public bool finishFlag = false;
 
     public GameObject _Client, _Hanger, _ViewHack, _Head;
     Client client;
@@ -62,7 +67,7 @@ public class Master : MonoBehaviour
             {
                 view.blackOut();
             }
-            ).AddTo(this);
+        ).AddTo(this);
 
         // 設定時間後に起動
         Observable.Timer(System.TimeSpan.FromSeconds(parasiteTime))
@@ -116,7 +121,7 @@ public class Master : MonoBehaviour
                 }
                 ).AddTo(this);
             }
-            ).AddTo(this);
+        ).AddTo(this);
     }
 
     void Update(){
@@ -137,8 +142,38 @@ public class Master : MonoBehaviour
 
         if(headAngle.secondHangerFlag){
             hanger.act();
+
+            //消えていく処理
+            vanish();
             headAngle.secondHangerFlag = false;
         }
         
+    }
+
+    void vanish(){
+
+        var isFinish = Observable.EveryUpdate()
+                .Where(_ => audioSendFlag);
+
+        
+        Observable.Timer(System.TimeSpan.FromSeconds(finishTime))
+            .Subscribe(_ =>
+            {
+                finishFlag = true;
+            }
+        ).AddTo(this);
+
+        Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(changeColorDeltaTime))
+            .TakeUntil(isFinish)
+            .Subscribe(x =>
+            {
+                // 色が徐々に変わっていく処理
+                try{
+                    view.viewHack(100 - 2* (int)(object)x);
+                }catch(NullReferenceException){
+                    
+                }
+            }
+        ).AddTo(this);
     }
 }
