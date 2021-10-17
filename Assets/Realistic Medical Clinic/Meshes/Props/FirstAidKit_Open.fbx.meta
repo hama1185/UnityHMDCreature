@@ -1,0 +1,199 @@
+fileFormatVersion: 2
+guid: 5aae3bde731cbf2449db0ae4a9f85903
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Medicine_4_b
+    2100002: Medicine_4_a
+    2100004: Medicine_5_b
+    2100006: Medicine_5_a
+    2100008: Medicine_1_b
+    2100010: Medicine_3_a
+    2100012: Medicine_3_b
+    2100014: Medicine_1_a
+    2100016: Bandage_1
+    2100018: Bandage_2
+    2100020: TabletPackColor
+    2100022: Tablet_Color
+    2100024: Tablet_Color_3
+    2100026: Tablet_Color_2
+    2100028: Tablet_Color_4
+    2100030: Bottle_Color
+    2100032: FirstAidKit_Material
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: FirstAidKit_Open
+    6400000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bandage_1
+    second: {fileID: 2100000, guid: 74d67e2538506b94e9e3f3c24e150ca1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bandage_2
+    second: {fileID: 2100000, guid: 15fd4206615af39449bcda144a41c75f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bottle_Color
+    second: {fileID: 2100000, guid: 01ec8c0bebe4c794ab3ec1b2e41d5735, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FirstAidKit_Material
+    second: {fileID: 2100000, guid: 913439fcccaaab743ac6d6496a1fc2a0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_1_a
+    second: {fileID: 2100000, guid: 407252d6a5e82d744b5228ee8aea1932, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_1_b
+    second: {fileID: 2100000, guid: f4d98d930f8f68f4d912dddb1e9c7e95, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_3_a
+    second: {fileID: 2100000, guid: 1adb88096d25d1d4c9455351c289e053, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_3_b
+    second: {fileID: 2100000, guid: 4198b06a79cbf914bb40ee9a59fe949f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_4_a
+    second: {fileID: 2100000, guid: cf899b7e6d980654ab725d05720bdd75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_4_b
+    second: {fileID: 2100000, guid: 4bfd41efa5e07a04892453b5eec218dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_5_a
+    second: {fileID: 2100000, guid: 13e267919d1f5dd4d874666c4f581579, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medicine_5_b
+    second: {fileID: 2100000, guid: 93ae87aecc7cc7042940095183d18a9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TabletPackColor
+    second: {fileID: 2100000, guid: fb368a9bf554c9248b8f90b7bc67d023, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tablet_Color
+    second: {fileID: 2100000, guid: fee2671091185a84896a4a52a6bcee8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tablet_Color_2
+    second: {fileID: 2100000, guid: a60f878ba38430a4db71c541075fe8d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tablet_Color_3
+    second: {fileID: 2100000, guid: 0624397791e088c42b319418dd0063db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tablet_Color_4
+    second: {fileID: 2100000, guid: fd834acfb50b1b746b328cf6a7e1a764, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
