@@ -35,7 +35,11 @@ public class Master : MonoBehaviour
 
     // モノが落ちる時間間隔
     [SerializeField]
-    int fallObjTime = 10;
+    int fallObjTime = 20;
+
+    // 視線誘導オーブ生成時間間隔
+    [SerializeField]
+    int generateTime = 20;
 
     // 体験が終了するまでの時間
     [SerializeField]
@@ -44,12 +48,13 @@ public class Master : MonoBehaviour
     public bool audioSendFlag = false;
     public bool finishFlag = false;
 
-    public GameObject _Client, _Hanger, _ViewHack, _Head, _Pusher;
+    public GameObject _Client, _Hanger, _ViewHack, _Head, _Pusher, _GazeGuide;
     Client client;
     HangerController hanger;
     ViewHacking view;
     headAngleControl headAngle;
     push push;
+    Gazeguidance gazeguidance;
 
     void Awake(){
         client = _Client.GetComponent<Client>();
@@ -61,6 +66,7 @@ public class Master : MonoBehaviour
         }
         headAngle = _Head.GetComponent<headAngleControl>();
         push = _Pusher.GetComponent<push>();
+        gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
     }
 
     // 起動時処理
@@ -130,9 +136,19 @@ public class Master : MonoBehaviour
                 //一定の間隔でモノが落ち始める
                 Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(fallObjTime))
                 .TakeUntil(endFlag)
+                .DelaySubscription(System.TimeSpan.FromSeconds(10.0f)) //視線誘導オーブがターゲットにたどり着いてからモノを落下させるために購入を遅延
                 .Subscribe(_ =>
                 {
                     push.pushObject();
+                }
+                ).AddTo(this);
+
+                //一定の間隔で視線誘導オーブ生成
+                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(generateTime))
+                .TakeUntil(endFlag)
+                .Subscribe(_ =>
+                {
+                    gazeguidance.GenerateGuide();
                 }
                 ).AddTo(this);
             }
