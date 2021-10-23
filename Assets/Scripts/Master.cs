@@ -33,6 +33,14 @@ public class Master : MonoBehaviour
     [SerializeField]
     int hangerTime = 50;
 
+    // モノが落ちる時間間隔
+    [SerializeField]
+    int fallObjTime = 20;
+
+    // 視線誘導オーブ生成時間間隔
+    [SerializeField]
+    int generateTime = 20;
+
     // 体験が終了するまでの時間
     [SerializeField]
     int finishTime = 25;
@@ -40,11 +48,13 @@ public class Master : MonoBehaviour
     public bool audioSendFlag = false;
     public bool finishFlag = false;
 
-    public GameObject _Client, _Hanger, _ViewHack, _Head;
+    public GameObject _Client, _Hanger, _ViewHack, _Head, _Pusher, _GazeGuide;
     Client client;
     HangerController hanger;
     ViewHacking view;
     headAngleControl headAngle;
+    push push;
+    Gazeguidance gazeguidance;
 
     void Awake(){
         client = _Client.GetComponent<Client>();
@@ -55,6 +65,8 @@ public class Master : MonoBehaviour
             Debug.Log(e);
         }
         headAngle = _Head.GetComponent<headAngleControl>();
+        push = _Pusher.GetComponent<push>();
+        gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
     }
 
     // 起動時処理
@@ -118,6 +130,25 @@ public class Master : MonoBehaviour
                     headAngle.hangerLeftFlag = true;
 
                     // 生物を倒すことのコールバックが来たら終盤の設定を起動する
+                }
+                ).AddTo(this);
+
+                //一定の間隔でモノが落ち始める
+                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(fallObjTime))
+                .TakeUntil(endFlag)
+                .DelaySubscription(System.TimeSpan.FromSeconds(10.0f)) //視線誘導オーブがターゲットにたどり着いてからモノを落下させるために購入を遅延
+                .Subscribe(_ =>
+                {
+                    push.pushObject();
+                }
+                ).AddTo(this);
+
+                //一定の間隔で視線誘導オーブ生成
+                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(generateTime))
+                .TakeUntil(endFlag)
+                .Subscribe(_ =>
+                {
+                    gazeguidance.GenerateGuide();
                 }
                 ).AddTo(this);
             }
