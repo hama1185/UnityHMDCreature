@@ -12,6 +12,7 @@ public enum State{
 
 public class SectionManager : MonoBehaviour
 {
+    QuoteManager quoteManager;
     private State currentState;
     
     void Start() {
@@ -41,18 +42,30 @@ public class SectionManager : MonoBehaviour
     void OnStateChanged(State state) {
         switch(state) {
             case State.Intro:
+                // セリフ
+                
             break;
 
             case State.Guide:
+                // 心音
+                // 視線誘導
+                // 人がドアが入ってくる
+                // セリフ
             break;
 
             case State.Foreshadowing:
+                // 視線誘導
+                // セリフ
+                // 物を落とす
             break;
 
             case State.Reaction:
+                // セリフ
+                // 視線誘導
             break;
 
             case State.Fin:
+                // セリフ
             break;
 
             default:
