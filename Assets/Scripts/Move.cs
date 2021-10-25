@@ -19,7 +19,13 @@ public class Move : MonoBehaviour
     void Update()
     {
         if(isWalking){
-            this.transform.position += new Vector3(0.0f, 0.0f, -0.007f);
+            this.transform.position += new Vector3(0.0f, 0.0f, -0.01f);
+            if(this.transform.position.z < -1.8f){
+                StartCoroutine("closeDoor");
+                isWalking = false;
+                animator.SetTrigger("CloseDoor");
+
+            }
         }
     }
 
@@ -32,10 +38,9 @@ public class Move : MonoBehaviour
         var currentRotation = firstDoor.transform.localRotation; // localEulerAnglesの代わりにlocalRotationを取得
         var currentRotation2 = secondDoor.transform.localRotation; // localEulerAnglesの代わりにlocalRotationを取得
         var newRotation = currentRotation * Quaternion.AngleAxis(90, Vector3.up); // currentRotationを(1, 0, 0)軸周り90°回転したものをnewRotationとする
-        var newRotation2 = currentRotation2 * Quaternion.AngleAxis(0, Vector3.up); // currentRotationを(1, 0, 0)軸周り90°回転したものをnewRotationとする
 
-        Debug.Log(currentRotation.eulerAngles);
-        Debug.Log(newRotation.eulerAngles);
+        //Debug.Log(currentRotation.eulerAngles);
+        //Debug.Log(newRotation.eulerAngles);
 
         for (float t=0;t<0.5f;t+=0.025f)
         {
@@ -50,7 +55,7 @@ public class Move : MonoBehaviour
         animator.SetTrigger("OpenDoor");
         isWalking = true;
 
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(3.0f);
 
         for (float t=0;t<0.5f;t+=0.025f)
         {
@@ -62,12 +67,16 @@ public class Move : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        currentRotation2 = secondDoor.transform.localRotation;
-        yield return new WaitForSeconds(1.0f);
+        
+    }
 
+    IEnumerator closeDoor(){
+        var Rotation2 = secondDoor.transform.localRotation;
+        var newRotation2 = Rotation2 * Quaternion.AngleAxis(-90, Vector3.up); // currentRotationを(1, 0, 0)軸周り90°回転したものをnewRotationとする
+        Debug.Log("closing");
         for (float t=0;t<0.5f;t+=0.025f)
         {
-            Quaternion rotation = Quaternion.Slerp(currentRotation2, newRotation2, t * 2); // 中間の回転を求めるのにSlerpを使いましたが、より高速なLerpを使ってもほとんど違和感はないかと思います
+            Quaternion rotation = Quaternion.Slerp(Rotation2, newRotation2, t * 2); // 中間の回転を求めるのにSlerpを使いましたが、より高速なLerpを使ってもほとんど違和感はないかと思います
 
             //rotatingAxisは回転させるオブジェクト
             secondDoor.transform.localRotation = rotation;

@@ -2224,19 +2224,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.23733748
+      value: 0.6071862
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.01119254
+      value: 0.028634146
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.97028446
+      value: 0.79316205
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.045757405
+      value: -0.037404533
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2244,7 +2244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 152.51
+      value: 105.13
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -9635,7 +9635,7 @@ Light:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2.58
   m_Range: 10
-  m_SpotAngle: 109.6
+  m_SpotAngle: 179
   m_InnerSpotAngle: 11.8
   m_CookieSize: 10
   m_Shadows:
@@ -9691,7 +9691,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867024847}
   m_LocalRotation: {x: 0.7154489, y: 0, z: 0, w: 0.698665}
-  m_LocalPosition: {x: 0.626, y: 3.551, z: 1.156}
+  m_LocalPosition: {x: 0.626, y: 3.27, z: 1.156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -18361,6 +18361,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7686ac3328a2a45bdde6b22b28806f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  Speed: 0
 --- !u!114 &1710241605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18408,8 +18410,19 @@ MonoBehaviour:
   species: Human
   stats: {fileID: 11400000, guid: 5f52eda6bb8a93a4b893f847eee5dcc5, type: 2}
   wanderZone: 8
+  dominance: 1
+  originalDominance: 0
   awareness: 12
   scent: 5
+  originalScent: 0
+  stamina: 10
+  power: 10
+  toughness: 5
+  agression: 0
+  originalAgression: 0
+  attackSpeed: 0.5
+  territorial: 0
+  stealthy: 0
   constainedToWanderZone: 0
   nonAgressiveTowards: []
   matchSurfaceRotation: 0
@@ -18422,15 +18435,46 @@ MonoBehaviour:
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
   attackingEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
   idleEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
   movementEvent:
     m_PersistentCalls:
       m_Calls: []
+    m_CallsDirty: 1
+  distanceColor:
+    r: 0
+    g: 0
+    b: 205
+    a: 1
+  awarnessColor:
+    r: 1
+    g: 0
+    b: 1
+    a: 1
+  scentColor:
+    r: 1
+    g: 0
+    b: 0
+    a: 1
+  animator: {fileID: 0}
+  characterController: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  origin: {x: 0, y: 0, z: 0}
+  totalIdleStateWeight: 0
+  currentState: 0
+  dead: 0
+  moving: 0
+  useNavMesh: 0
+  targetLocation: {x: 0, y: 0, z: 0}
+  currentTurnSpeed: 0
+  attacking: 0
 --- !u!195 &1710241606
 NavMeshAgent:
   m_ObjectHideFlags: 0
