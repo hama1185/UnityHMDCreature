@@ -44,22 +44,57 @@ public class QuoteManager : MonoBehaviour
     void Start() {
         quote = this.GetComponent<TMP_Text>();
         textMeshProSimpleAnimator = this.GetComponent<TextMeshProSimpleAnimator>();
-        quote.text = quoteListSection1[quoteNumber];
     }
 
-    public void nextIntroQuote(){
+    public void nextQuote(int sectionNumber){
+        switch(sectionNumber){
+            case 0:
+                quote.text = quoteListSection1[quoteNumber];
+            break;
+            case 1:
+                quote.text = quoteListSection2[quoteNumber];
+            break;
+            case 2:
+                quote.text = quoteListSection3[quoteNumber];
+            break;
+            case 3:
+                quote.text = quoteListSection4[quoteNumber];
+            break;
+            case 4:
+                quote.text = quoteListSection5[quoteNumber];
+            break;
+            default:
+            break;
+        }
         quoteNumber += 1;
-        quote.text = quoteListSection1[quoteNumber];
-        textMeshProSimpleAnimator.Play();
-    }
-
-    public void beforeQuote(){
-        quoteNumber -= 1;
-        quote.text = quoteListSection1[quoteNumber];
         textMeshProSimpleAnimator.Play();
     }
 
     public void resetQuoteNumber() {
         quoteNumber = 0;
-    } 
+    }
+
+    // for文にぶち込む
+    public int sectionMaxNumber(int sectionNumber) {
+        int returnNumber = 0;
+        switch(sectionNumber){
+            case 0:
+                returnNumber = quoteListSection1.Length - 1;
+            break;
+            case 1:
+                returnNumber = quoteListSection2.Length - 1;
+            break;
+            case 2:
+                returnNumber = quoteListSection3.Length - 1;
+            break;
+            case 3:
+                returnNumber = quoteListSection4.Length - 1;
+            break;
+            case 4:
+                returnNumber = quoteListSection5.Length - 1;
+            break;
+            default:
+            break;
+        }
+    }
 }
