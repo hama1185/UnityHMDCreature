@@ -19,7 +19,7 @@ public class Move : MonoBehaviour
     void Update()
     {
         if(isWalking){
-            this.transform.position += new Vector3(0.0f, 0.0f, -0.01f);
+            this.transform.position += new Vector3(0.0f, 0.0f, -0.009f);
             if(this.transform.position.z < -1.8f){
                 StartCoroutine("closeDoor");
                 isWalking = false;
@@ -38,6 +38,7 @@ public class Move : MonoBehaviour
         var currentRotation = firstDoor.transform.localRotation; // localEulerAnglesの代わりにlocalRotationを取得
         var currentRotation2 = secondDoor.transform.localRotation; // localEulerAnglesの代わりにlocalRotationを取得
         var newRotation = currentRotation * Quaternion.AngleAxis(90, Vector3.up); // currentRotationを(1, 0, 0)軸周り90°回転したものをnewRotationとする
+        var newRotation2 = currentRotation * Quaternion.AngleAxis(0, Vector3.up); // currentRotationを(1, 0, 0)軸周り90°回転したものをnewRotationとする
 
         //Debug.Log(currentRotation.eulerAngles);
         //Debug.Log(newRotation.eulerAngles);
@@ -55,7 +56,17 @@ public class Move : MonoBehaviour
         animator.SetTrigger("OpenDoor");
         isWalking = true;
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.5f);
+        currentRotation = firstDoor.transform.localRotation;
+        for (float t=0;t<0.5f;t+=0.025f)
+        {
+            Quaternion rotation = Quaternion.Slerp(currentRotation, newRotation2, t * 2); // 中間の回転を求めるのにSlerpを使いましたが、より高速なLerpを使ってもほとんど違和感はないかと思います
+
+            //rotatingAxisは回転させるオブジェクト
+            firstDoor.transform.localRotation = rotation;
+
+            yield return new WaitForSeconds(0.05f);
+        }
 
         for (float t=0;t<0.5f;t+=0.025f)
         {
