@@ -38,12 +38,13 @@ public class QuoteManager : MonoBehaviour
     public int quoteNumber = 0;
     
     // public GameObject quotebox;
+    public GameObject QuoteText;
     TMP_Text quote;
     TextMeshProSimpleAnimator textMeshProSimpleAnimator;
     
     void Start() {
-        quote = this.GetComponent<TMP_Text>();
-        textMeshProSimpleAnimator = this.GetComponent<TextMeshProSimpleAnimator>();
+        quote = QuoteText.GetComponent<TMP_Text>();
+        textMeshProSimpleAnimator = QuoteText.GetComponent<TextMeshProSimpleAnimator>();
     }
 
     public void nextQuote(int sectionNumber){

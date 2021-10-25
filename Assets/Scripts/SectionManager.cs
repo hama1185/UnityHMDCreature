@@ -19,7 +19,8 @@ public class SectionManager : MonoBehaviour
     float sceneTime = 2.5f;
     
     void Start() {
-        
+        quoteManager = this.GetComponent<QuoteManager>();
+        SetCurrentState(State.Intro);
     }
 
     void Update() {
@@ -89,8 +90,11 @@ public class SectionManager : MonoBehaviour
             .Subscribe(_ =>
             {
                 // 心音
+                Debug.Log("心音");
                 // 視線誘導
+                Debug.Log("視線誘導");
                 // 人がドアが入ってくる
+                Debug.Log("人が入ってくる");
                 Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
                 .Subscribe(_ => 
                     {
@@ -113,6 +117,7 @@ public class SectionManager : MonoBehaviour
             .Subscribe(_ =>
             {
                 // 視線誘導ハンガー
+                Debug.Log("視線誘導");
                 Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
                     .Take(quoteManager.sectionMaxNumber((int)currentState))
                     .Subscribe(_ =>
@@ -124,6 +129,7 @@ public class SectionManager : MonoBehaviour
                             .Subscribe(_ =>
                             {
                                 // ものを落とす
+                                Debug.Log("物が落ちる");
                             }
                         ).AddTo(this);
                     }
@@ -144,9 +150,11 @@ public class SectionManager : MonoBehaviour
                         quoteManager.nextQuote((int)currentState);
                         if(x == 0){
                             // ハンガー状態解除
+                            Debug.Log("ハンガー解除");
                         }
                         else if(x == 1){
                             // 視線誘導ハンガー
+                            Debug.Log("視線誘導");
                             // これが終わった後の時間の間隔を定めたほうがいいかも
                             // 一応2.5秒の間隔を開けている
                         }
