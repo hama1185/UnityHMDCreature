@@ -55,18 +55,15 @@ public class SectionManager : MonoBehaviour
             break;
 
             case State.Foreshadowing:
-                // 視線誘導
-                // セリフ
-                // 物を落とす
+                DoForeshadowing();
             break;
 
             case State.Reaction:
-                // セリフ
-                // 視線誘導
+                DoReaction();
             break;
 
             case State.Fin:
-                // セリフ
+                DoFin();
             break;
 
             default:
@@ -89,12 +86,85 @@ public class SectionManager : MonoBehaviour
 
     void DoGuide(){
         Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 3))
-            .Subscribe(
+            .Subscribe(_ =>
+            {
                 // 心音
                 // 視線誘導
                 // 人がドアが入ってくる
-                // セリフ
+                Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
+                .Subscribe(_ => 
+                    {
+                        Observable.Timer(System.TimeSpan.Zero ,System.TimeSpan.FromSeconds(sceneTime * 2))
+                            .Take(quoteManager.sectionMaxNumber((int)currentState))
+                            .DoOnCompleted(() => SetCurrentState(State.Foreshadowing))
+                            .Subscribe(_ =>
+                            {
+                                quoteManager.nextQuote((int)currentState);
+                            }
+                        ).AddTo(this);
+                    }
+                ).AddTo(this);
+            }
+        ).AddTo(this);
+    }
 
+    void DoForeshadowing(){
+        Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 2))
+            .Subscribe(_ =>
+            {
+                // 視線誘導ハンガー
+                Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
+                    .Take(quoteManager.sectionMaxNumber((int)currentState))
+                    .Subscribe(_ =>
+                    {
+                        quoteManager.nextQuote((int)currentState);
+                        
+                        Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 2))
+                            .DoOnCompleted(() => SetCurrentState(State.Reaction))
+                            .Subscribe(_ =>
+                            {
+                                // ものを落とす
+                            }
+                        ).AddTo(this);
+                    }
+                ).AddTo(this);
+            }    
+        ).AddTo(this);
+    }
+
+    void DoReaction(){
+        Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
+            .Subscribe(_ =>
+            {
+                Observable.Timer(System.TimeSpan.Zero ,System.TimeSpan.FromSeconds(sceneTime * 2))
+                    .Take(quoteManager.sectionMaxNumber((int)currentState))
+                    .DoOnCompleted(() => SetCurrentState(State.Fin))
+                    .Subscribe(x =>
+                    {
+                        quoteManager.nextQuote((int)currentState);
+                        if(x == 0){
+                            // ハンガー状態解除
+                        }
+                        else if(x == 1){
+                            // 視線誘導ハンガー
+                            // これが終わった後の時間の間隔を定めたほうがいいかも
+                            // 一応2.5秒の間隔を開けている
+                        }
+                        else{}
+                    }
+                ).AddTo(this);
+            }    
+        ).AddTo(this);
+    }
+
+    void DoFin(){
+        Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
+            .Take(quoteManager.sectionMaxNumber((int)currentState))
+            //.DoOnCompleted(() => ハンガー状態解除の関数を書く)
+            .Subscribe(_ =>
+            {
+                quoteManager.nextQuote((int)currentState);
+            }
         ).AddTo(this);
     }
 }
