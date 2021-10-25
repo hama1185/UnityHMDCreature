@@ -12,14 +12,14 @@ public class Move : MonoBehaviour
     void Start()
     {
         this.animator = GetComponent<Animator>();
-        OpeningDoor();
+        //OpeningDoor();
     }
 
     // Update is called once per frame
     void Update()
     {
         if(isWalking){
-            this.transform.position += new Vector3(0.0f, 0.0f, -0.009f);
+            this.transform.position += new Vector3(0.0f, 0.0f, -0.01f);
             if(this.transform.position.z < -1.8f){
                 StartCoroutine("closeDoor");
                 isWalking = false;
