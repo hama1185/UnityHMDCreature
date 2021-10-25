@@ -21,6 +21,7 @@ public class Timer : MonoBehaviour
         
         Observable.Interval(System.TimeSpan.FromSeconds(3.0f))
         .Take(5)
+        .DoOnCompleted(() => Debug.Log("DoOnCompleted"))
         .Subscribe(_ =>
         {
             // フラグを起動

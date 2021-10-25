@@ -47,22 +47,11 @@ public class SectionManager : MonoBehaviour
         quoteManager.resetQuoteNumber();
         switch(state) {
             case State.Intro:
-                // セリフ
-                Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
-                    .Take(quoteManager.sectionMaxNumber((int)currentState))
-                    .Subscribe(_ =>
-                    {
-                        quoteManager.nextQuote((int)currentState);
-                    }
-                ).AddTo(this);
-                
+                DoIntro();
             break;
-
+            // タイマーは並列で動くので時間の管理がだるい
             case State.Guide:
-                // 心音
-                // 視線誘導
-                // 人がドアが入ってくる
-                // セリフ
+                DoGuide();
             break;
 
             case State.Foreshadowing:
@@ -83,5 +72,29 @@ public class SectionManager : MonoBehaviour
             default:
             break;
         }
-    } 
+    }
+
+    // それぞれの動作
+    void DoIntro(){
+        // セリフ
+        Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
+            .Take(quoteManager.sectionMaxNumber((int)currentState))
+            .DoOnCompleted(() => SetCurrentState(State.Guide))
+            .Subscribe(_ =>
+            {
+                quoteManager.nextQuote((int)currentState);
+            }
+        ).AddTo(this);
+    }
+
+    void DoGuide(){
+        Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 3))
+            .Subscribe(
+                // 心音
+                // 視線誘導
+                // 人がドアが入ってくる
+                // セリフ
+
+        ).AddTo(this);
+    }
 }
