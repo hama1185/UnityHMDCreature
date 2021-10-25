@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 public enum State{
     Intro,
@@ -14,6 +16,7 @@ public class SectionManager : MonoBehaviour
 {
     QuoteManager quoteManager;
     private State currentState;
+    float sceneTime = 2.5f;
     
     void Start() {
         
@@ -40,9 +43,18 @@ public class SectionManager : MonoBehaviour
     
     // ステートの値が変わったとき
     void OnStateChanged(State state) {
+        // セリフの番号をリセット
+        quoteManager.resetQuoteNumber();
         switch(state) {
             case State.Intro:
                 // セリフ
+                Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
+                    .Take(quoteManager.sectionMaxNumber((int)currentState))
+                    .Subscribe(_ =>
+                    {
+                        quoteManager.nextQuote((int)currentState);
+                    }
+                ).AddTo(this);
                 
             break;
 

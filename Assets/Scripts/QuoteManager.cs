@@ -79,22 +79,23 @@ public class QuoteManager : MonoBehaviour
         int returnNumber = 0;
         switch(sectionNumber){
             case 0:
-                returnNumber = quoteListSection1.Length - 1;
+                returnNumber = quoteListSection1.Length;
             break;
             case 1:
-                returnNumber = quoteListSection2.Length - 1;
+                returnNumber = quoteListSection2.Length;
             break;
             case 2:
-                returnNumber = quoteListSection3.Length - 1;
+                returnNumber = quoteListSection3.Length;
             break;
             case 3:
-                returnNumber = quoteListSection4.Length - 1;
+                returnNumber = quoteListSection4.Length;
             break;
             case 4:
-                returnNumber = quoteListSection5.Length - 1;
+                returnNumber = quoteListSection5.Length;
             break;
             default:
             break;
         }
+        return returnNumber;
     }
 }
