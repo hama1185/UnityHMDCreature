@@ -166,7 +166,7 @@ public class SectionManager : MonoBehaviour
     }
 
     void DoFin(){
-        Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
+        Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
             .Take(quoteManager.sectionMaxNumber((int)currentState))
             //.DoOnCompleted(() => ハンガー状態解除の関数を書く)
             .Subscribe(_ =>
