@@ -103,23 +103,18 @@ public class SectionManager : MonoBehaviour
                 // 視線誘導
                 Debug.Log("視線誘導");
                 gazeguidance.GenerateGuide();
-                // 人がドアが入ってくる
-                Debug.Log("人が入ってくる");
-                push.pushObject();
 
-                Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
+                Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 2))
+                .DoOnCompleted(() => quoteGuide())
                 .Subscribe(_ => 
                     {
-                        Observable.Timer(System.TimeSpan.Zero ,System.TimeSpan.FromSeconds(sceneTime * 2))
-                            .Take(quoteManager.sectionMaxNumber((int)currentState))
-                            .DoOnCompleted(() => SetCurrentState(State.Foreshadowing))
-                            .Subscribe(_ =>
-                            {
-                                quoteManager.nextQuote((int)currentState);
-                            }
-                        ).AddTo(this);
+                        // 人がドアが入ってくる
+                        Debug.Log("人が入ってくる");
+                        push.pushObject();
                     }
                 ).AddTo(this);
+
+                
             }
         ).AddTo(this);
     }
@@ -187,6 +182,22 @@ public class SectionManager : MonoBehaviour
             .Subscribe(_ =>
             {
                 quoteManager.nextQuote((int)currentState);
+            }
+        ).AddTo(this);
+    }
+
+    void quoteGuide(){
+        Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
+            .Subscribe(_ => 
+            {
+                Observable.Timer(System.TimeSpan.Zero ,System.TimeSpan.FromSeconds(sceneTime * 2))
+                    .Take(quoteManager.sectionMaxNumber((int)currentState))
+                    .DoOnCompleted(() => SetCurrentState(State.Foreshadowing))
+                    .Subscribe(_ =>
+                    {
+                        quoteManager.nextQuote((int)currentState);
+                    }
+                ).AddTo(this);
             }
         ).AddTo(this);
     }
