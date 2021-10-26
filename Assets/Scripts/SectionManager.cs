@@ -17,7 +17,16 @@ public class SectionManager : MonoBehaviour
     QuoteManager quoteManager;
     private State currentState;
     float sceneTime = 2.5f;
+
+    public GameObject _Pusher, _GazeGuide;
+    push push;
+    Gazeguidance gazeguidance;
     
+    void Awake(){
+        push = _Pusher.GetComponent<push>();
+        gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
+    }
+
     void Start() {
         quoteManager = this.GetComponent<QuoteManager>();
         SetCurrentState(State.Intro);
@@ -93,8 +102,11 @@ public class SectionManager : MonoBehaviour
                 Debug.Log("心音");
                 // 視線誘導
                 Debug.Log("視線誘導");
+                gazeguidance.GenerateGuide();
                 // 人がドアが入ってくる
                 Debug.Log("人が入ってくる");
+                push.pushObject();
+
                 Observable.Timer(System.TimeSpan.FromSeconds(sceneTime))
                 .Subscribe(_ => 
                     {
@@ -117,7 +129,8 @@ public class SectionManager : MonoBehaviour
             .Subscribe(_ =>
             {
                 // 視線誘導ハンガー
-                Debug.Log("視線誘導");
+                gazeguidance.GenerateGuide();
+                Debug.Log("視線誘導 + Hanger");
                 Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
                     .Take(quoteManager.sectionMaxNumber((int)currentState))
                     .Subscribe(_ =>
@@ -129,6 +142,7 @@ public class SectionManager : MonoBehaviour
                             .Subscribe(_ =>
                             {
                                 // ものを落とす
+                                push.pushObject();
                                 Debug.Log("物が落ちる");
                             }
                         ).AddTo(this);
@@ -154,7 +168,8 @@ public class SectionManager : MonoBehaviour
                         }
                         else if(x == 1){
                             // 視線誘導ハンガー
-                            Debug.Log("視線誘導");
+                            gazeguidance.GenerateGuide();
+                            Debug.Log("視線誘導 + Hanger");
                             // これが終わった後の時間の間隔を定めたほうがいいかも
                             // 一応2.5秒の間隔を開けている
                         }
