@@ -18,11 +18,20 @@ public class SectionManager : MonoBehaviour
     private State currentState;
     float sceneTime = 2.5f;
 
-    public GameObject _Pusher, _GazeGuide;
+    public GameObject _Pusher, _GazeGuide, _Client, _Hanger;
     push push;
     Gazeguidance gazeguidance;
+    Client client;
+    HangerController hanger;
+
+    // 音が大きくなっていく間隔時間
+    [SerializeField]
+    float volUpDeltaTime = 0.5f;
+
     
     void Awake(){
+        client = _Client.GetComponent<Client>();
+        hanger = _Hanger.GetComponent<HangerController>();
         push = _Pusher.GetComponent<push>();
         gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
     }
@@ -100,6 +109,18 @@ public class SectionManager : MonoBehaviour
             {
                 // 心音
                 Debug.Log("心音");
+                // 音の再生
+                client.SendStart(1);
+
+                // 音のアップ設定 
+                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(volUpDeltaTime))
+                .Take(50)
+                .Subscribe(_ =>
+                {
+                    client.SendUp();
+                }
+                ).AddTo(this);
+
                 // 視線誘導
                 Debug.Log("視線誘導");
                 gazeguidance.GenerateGuide();
@@ -125,6 +146,7 @@ public class SectionManager : MonoBehaviour
             {
                 // 視線誘導ハンガー
                 gazeguidance.GenerateGuide();
+                hanger.act();
                 Debug.Log("視線誘導 + Hanger");
                 Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
                     .Take(quoteManager.sectionMaxNumber((int)currentState))
@@ -160,10 +182,12 @@ public class SectionManager : MonoBehaviour
                         if(x == 0){
                             // ハンガー状態解除
                             Debug.Log("ハンガー解除");
+                            hanger.act();
                         }
                         else if(x == 1){
                             // 視線誘導ハンガー
                             gazeguidance.GenerateGuide();
+                            hanger.act();
                             Debug.Log("視線誘導 + Hanger");
                             // これが終わった後の時間の間隔を定めたほうがいいかも
                             // 一応2.5秒の間隔を開けている
@@ -178,7 +202,7 @@ public class SectionManager : MonoBehaviour
     void DoFin(){
         Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
             .Take(quoteManager.sectionMaxNumber((int)currentState))
-            //.DoOnCompleted(() => ハンガー状態解除の関数を書く)
+            .DoOnCompleted(() => hanger.act())
             .Subscribe(_ =>
             {
                 quoteManager.nextQuote((int)currentState);

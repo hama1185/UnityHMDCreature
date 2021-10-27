@@ -1352,10 +1352,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sample text
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2795c2836ec4d2641b86aed2d0604484, type: 2}
-  m_sharedMaterial: {fileID: 6896234526464799955, guid: 2795c2836ec4d2641b86aed2d0604484, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1443,7 +1443,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 6896234526464799955, guid: 2795c2836ec4d2641b86aed2d0604484, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5468,7 +5468,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &448566273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6525,6 +6525,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bfecaf197f2db4ebcabf82fd294edb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Pusher: {fileID: 1539692965}
+  _GazeGuide: {fileID: 258089387}
+  _Client: {fileID: 1803775777}
+  _Hanger: {fileID: 448566272}
+  volUpDeltaTime: 0.5
 --- !u!4 &516184184
 Transform:
   m_ObjectHideFlags: 0
