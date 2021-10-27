@@ -16,7 +16,7 @@ public class SectionManager : MonoBehaviour
 {
     QuoteManager quoteManager;
     private State currentState;
-    float sceneTime = 2.5f;
+    float sceneTime = 3.0f;
 
     public GameObject _Pusher, _GazeGuide, _Client, _Hanger;
     push push;
@@ -111,16 +111,7 @@ public class SectionManager : MonoBehaviour
                 Debug.Log("心音");
                 // 音の再生
                 client.SendStart(1);
-
-                // 音のアップ設定 
-                Observable.Timer(System.TimeSpan.Zero,System.TimeSpan.FromSeconds(volUpDeltaTime))
-                .Take(50)
-                .Subscribe(_ =>
-                {
-                    client.SendUp();
-                }
-                ).AddTo(this);
-
+        
                 // 視線誘導
                 Debug.Log("視線誘導");
                 gazeguidance.GenerateGuide();
@@ -202,7 +193,7 @@ public class SectionManager : MonoBehaviour
     void DoFin(){
         Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
             .Take(quoteManager.sectionMaxNumber((int)currentState))
-            .DoOnCompleted(() => hanger.act())
+            .DoOnCompleted(() => killHanger())
             .Subscribe(_ =>
             {
                 quoteManager.nextQuote((int)currentState);
@@ -224,5 +215,10 @@ public class SectionManager : MonoBehaviour
                 ).AddTo(this);
             }
         ).AddTo(this);
+    }
+
+    void killHanger(){
+        hanger.act();
+        client.SendStop();
     }
 }

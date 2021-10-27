@@ -8,6 +8,12 @@ public class Move : MonoBehaviour
     public GameObject secondDoor;
     bool isWalking = false;
     Animator animator;
+
+    [SerializeField] private AudioSource a;//AudioSource型の変数aを宣言 使用するAudioSourceコンポーネントをアタッチ必要
+
+    [SerializeField] private AudioClip b1;//AudioClip型の変数b1を宣言 使用するAudioClipをアタッチ必要
+    [SerializeField] private AudioClip b2;//AudioClip型の変数b2を宣言 使用するAudioClipをアタッチ必要 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +49,8 @@ public class Move : MonoBehaviour
         //Debug.Log(currentRotation.eulerAngles);
         //Debug.Log(newRotation.eulerAngles);
 
+        //入口のドアが開く
+        a.PlayOneShot(b1);
         for (float t=0;t<0.5f;t+=0.025f)
         {
             Quaternion rotation = Quaternion.Slerp(currentRotation, newRotation, t * 2); // 中間の回転を求めるのにSlerpを使いましたが、より高速なLerpを使ってもほとんど違和感はないかと思います
@@ -67,7 +75,11 @@ public class Move : MonoBehaviour
 
             yield return new WaitForSeconds(0.05f);
         }
+        //入り口のドアが閉まる
+        a.PlayOneShot(b2);
 
+        //出口のドアが開く
+        a.PlayOneShot(b1);
         for (float t=0;t<0.5f;t+=0.025f)
         {
             Quaternion rotation = Quaternion.Slerp(currentRotation2, newRotation, t * 2); // 中間の回転を求めるのにSlerpを使いましたが、より高速なLerpを使ってもほとんど違和感はないかと思います
@@ -94,5 +106,7 @@ public class Move : MonoBehaviour
 
             yield return new WaitForSeconds(0.05f);
         }
+        //出口のドアが閉まる
+        a.PlayOneShot(b2);
     }
 }
