@@ -5,6 +5,12 @@ using TMPro;
 
 public class QuoteManager : MonoBehaviour
 {
+
+    public AudioClip audioClip;
+    AudioSource audioSource;
+    public float scl = 3.0f;
+
+
     // ここにセリフ書いて
     string[] quoteListSection1 = {
         "この度は寄生生物の被験者実験に協力いただきありがとうございます",
@@ -45,6 +51,8 @@ public class QuoteManager : MonoBehaviour
     void Start() {
         quote = QuoteText.GetComponent<TMP_Text>();
         textMeshProSimpleAnimator = QuoteText.GetComponent<TextMeshProSimpleAnimator>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
     }
 
     public void nextQuote(int sectionNumber){
@@ -69,6 +77,10 @@ public class QuoteManager : MonoBehaviour
         }
         quoteNumber += 1;
         textMeshProSimpleAnimator.Play();
+        audioSource.time = 3.0f * (0.9f - quote.text.Length / 53.0f);
+        audioSource.Play();
+        Debug.Log("tetetetete");
+
     }
 
     public void resetQuoteNumber() {

@@ -16,7 +16,7 @@ public class SectionManager : MonoBehaviour
 {
     QuoteManager quoteManager;
     private State currentState;
-    float sceneTime = 3.0f;
+    float sceneTime = 3.5f;
 
     public GameObject _Pusher, _GazeGuide, _Client, _Hanger;
     push push;
