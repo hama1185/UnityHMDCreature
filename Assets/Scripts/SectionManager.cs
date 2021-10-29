@@ -18,11 +18,12 @@ public class SectionManager : MonoBehaviour
     private State currentState;
     float sceneTime = 3.5f;
 
-    public GameObject _Pusher, _GazeGuide, _Client, _Hanger;
+    public GameObject _Pusher, _GazeGuide, _Client, _Hanger, _ServoController;
     push push;
     Gazeguidance gazeguidance;
     Client client;
     HangerController hanger;
+    ServoController servoController;
 
     // 音が大きくなっていく間隔時間
     [SerializeField]
@@ -34,6 +35,7 @@ public class SectionManager : MonoBehaviour
         hanger = _Hanger.GetComponent<HangerController>();
         push = _Pusher.GetComponent<push>();
         gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
+        servoController = _ServoController.GetComponent<ServoController>();
     }
 
     void Start() {
@@ -151,6 +153,8 @@ public class SectionManager : MonoBehaviour
                             {
                                 // ものを落とす
                                 push.pushObject();
+                                // 現実でも落とす
+                                servoController.sendopendataUDP();
                                 Debug.Log("物が落ちる");
                             }
                         ).AddTo(this);
