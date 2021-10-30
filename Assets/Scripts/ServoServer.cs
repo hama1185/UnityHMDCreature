@@ -36,9 +36,7 @@ public class ServoServer : MonoBehaviour {
                 var address = item.Value.packets[lastPacketIndex].Address.ToString();
                 if(address.Contains("/Start")){
                     if(!playFlag){
-                        if((bool)item.Value.packets[lastPacketIndex].Data[0]){
-                            playFlag = true;
-                        }
+                        playFlag = true;
                     }
                 }
             }
