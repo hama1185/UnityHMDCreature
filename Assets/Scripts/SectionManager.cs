@@ -9,7 +9,8 @@ public enum State{
     Guide,
     Foreshadowing,
     Reaction,
-    Fin
+    Fin,
+    Fin2
 }
 
 public class SectionManager : MonoBehaviour
@@ -18,12 +19,13 @@ public class SectionManager : MonoBehaviour
     private State currentState;
     float sceneTime = 3.5f;
 
-    public GameObject _Pusher, _GazeGuide, _Client, _Hanger, _ServoController;
+    public GameObject _Pusher, _GazeGuide, _Client, _Hanger, _ServoController, _Noise;
     push push;
     Gazeguidance gazeguidance;
     Client client;
     HangerController hanger;
     ServoController servoController;
+    Noising noise;
 
     // 音が大きくなっていく間隔時間
     [SerializeField]
@@ -36,6 +38,7 @@ public class SectionManager : MonoBehaviour
         push = _Pusher.GetComponent<push>();
         gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
         servoController = _ServoController.GetComponent<ServoController>();
+        noise = _Noise.GetComponent<Noising>();
     }
 
     void Start() {
@@ -87,6 +90,9 @@ public class SectionManager : MonoBehaviour
                 DoFin();
             break;
 
+            //case State.Fin2:
+                //DoFin2();
+            //break;
             default:
             break;
         }
@@ -117,6 +123,10 @@ public class SectionManager : MonoBehaviour
                 // 視線誘導
                 Debug.Log("視線誘導");
                 gazeguidance.GenerateGuide();
+                // ハンガー
+                hanger.act();
+                //音誘導
+                noise.MakeNoise();
 
                 Observable.Timer(System.TimeSpan.FromSeconds(sceneTime * 2))
                 .DoOnCompleted(() => quoteGuide())
@@ -124,6 +134,7 @@ public class SectionManager : MonoBehaviour
                     {
                         // 人がドアが入ってくる
                         Debug.Log("人が入ってくる");
+                        hanger.act();
                         push.pushObject();
                     }
                 ).AddTo(this);
@@ -141,6 +152,9 @@ public class SectionManager : MonoBehaviour
                 gazeguidance.GenerateGuide();
                 hanger.act();
                 Debug.Log("視線誘導 + Hanger");
+                //音誘導
+                noise.MakeNoise();
+
                 Observable.Interval(System.TimeSpan.FromSeconds(sceneTime))
                     .Take(quoteManager.sectionMaxNumber((int)currentState))
                     .Subscribe(_ =>
@@ -184,6 +198,8 @@ public class SectionManager : MonoBehaviour
                             gazeguidance.GenerateGuide();
                             hanger.act();
                             Debug.Log("視線誘導 + Hanger");
+                            //音誘導
+                            noise.MakeNoise();
                             // これが終わった後の時間の間隔を定めたほうがいいかも
                             // 一応2.5秒の間隔を開けている
                         }
@@ -193,6 +209,22 @@ public class SectionManager : MonoBehaviour
             }    
         ).AddTo(this);
     }
+
+    /*
+    void DoFin(){
+        Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))
+            .Take(quoteManager.sectionMaxNumber((int)currentState))
+            .DoOnCompleted(() => SetCurrentState(State.Fin2))
+            .Subscribe(_ =>
+            {
+                //quoteManager.nextQuote((int)currentState);
+                Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(_ =>
+                {
+                }).AddTo(this);
+            }
+        ).AddTo(this);
+    }
+    */
 
     void DoFin(){
         Observable.Interval(System.TimeSpan.FromSeconds(sceneTime * 2))

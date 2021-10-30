@@ -25,9 +25,9 @@ public class Gazeguidance : MonoBehaviour
 
     public void GenerateGuide(){
         if(current_no == 1){
-            for(int i = 0; i < 40; i++){
+            for(int i = 0; i < 60; i++){
                 //落下物に対して向かっていく光のようなものを生成
-                Vector3 pos = new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-2.0f, 2.0f), Random.Range(-1.0f, 3.0f));
+                Vector3 pos = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(0.0f, 2.0f), Random.Range(-1.0f, 3.0f));
                 Num = Random.Range(-180.0f, 180.0f);
                 RandomQ = Quaternion.Euler(0,0,Num);
                 GameObject ball = Instantiate(prefab, pos, RandomQ);
@@ -43,7 +43,7 @@ public class Gazeguidance : MonoBehaviour
                 RandomQ = Quaternion.Euler(0,0,Num);
                 GameObject ball = Instantiate(prefab, pos, RandomQ);
                 MoveSphere ms = ball.GetComponent<MoveSphere>();
-                ms.setTarget(book);
+                ms.setTarget(plant);
             }
             current_no++;
         } else if (current_no == 3){
@@ -54,7 +54,7 @@ public class Gazeguidance : MonoBehaviour
                 RandomQ = Quaternion.Euler(0,0,Num);
                 GameObject ball = Instantiate(prefab, pos, RandomQ);
                 MoveSphere ms = ball.GetComponent<MoveSphere>();
-                ms.setTarget(plant);
+                ms.setTarget(book);
             }
             current_no++;
         }

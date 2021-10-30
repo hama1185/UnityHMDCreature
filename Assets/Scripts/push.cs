@@ -33,12 +33,12 @@ public class push : MonoBehaviour
             current_no++;
         }
         else if(current_no == 2){
-            Vector3 f = new Vector3(0.5f, 0.0f, 0.0f);
-            rb1.AddForce(f, ForceMode.Impulse);
-            current_no++;
-        } else if (current_no == 3){
             Vector3 f = new Vector3(-0.5f, 0.0f, 0.0f);
             rb2.AddForce(f, ForceMode.Impulse);
+            current_no++;
+        } else if (current_no == 3){
+            Vector3 f = new Vector3(0.6f, 0.0f, 0.0f);
+            rb1.AddForce(f, ForceMode.Impulse);
             current_no++;
         } 
     }

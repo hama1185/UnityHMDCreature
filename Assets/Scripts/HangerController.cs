@@ -84,7 +84,7 @@ public class HangerController : MonoBehaviour
         Debug.Log("[Hanger] act"+state);
         switch(state){
             case 0:
-                pump_bal1_emit_bal2();
+                pump_bal2_emit_bal1();
                 break;
             case 1:
                 emit();
@@ -93,6 +93,12 @@ public class HangerController : MonoBehaviour
                 pump_bal2_emit_bal1();
                 break;
             case 3:
+                emit();
+                break;
+            case 4:
+                pump_bal1_emit_bal2();
+                break;
+            case 5:
                 emit();
                 break;
             default:

@@ -25,7 +25,7 @@ public class Move : MonoBehaviour
     void Update()
     {
         if(isWalking){
-            this.transform.position += new Vector3(0.0f, 0.0f, -0.01f);
+            this.transform.position += new Vector3(0.0f, 0.0f, -0.015f);
             if(this.transform.position.z < -1.8f){
                 StartCoroutine("closeDoor");
                 isWalking = false;

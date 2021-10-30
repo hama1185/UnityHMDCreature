@@ -36,6 +36,12 @@ public class QuoteManager : MonoBehaviour
         "うわっ！びっくりした～。大丈夫ですか？まったく...誰かが雑に置いたんですね...",
         "それでは、そろそろ寄生体験は終了のお時間となります"
     };
+    /*
+    string[] quoteListSection5 = {
+        "",
+        "",
+    };
+    */
 
     string[] quoteListSection5 = {
         "最初から長時間の寄生は身体の負担が大きいので今回の被験者実験は終了となります",
@@ -73,14 +79,19 @@ public class QuoteManager : MonoBehaviour
             case 4:
                 quote.text = quoteListSection5[quoteNumber];
             break;
+            //case 5:
+                //quote.text = quoteListSection6[quoteNumber];
+            //break;
             default:
             break;
         }
         quoteNumber += 1;
         textMeshProSimpleAnimator.Play();
-        audioSource.time = 3.0f * (0.9f - quote.text.Length / 53.0f);
-        audioSource.Play();
-        Debug.Log("tetetetete");
+        if(quote.text.Length > 1){
+            audioSource.time = 6.0f * (1.2f - quote.text.Length / 53.0f);
+            audioSource.Play();
+            Debug.Log("tetetetete");
+        }
 
     }
 
