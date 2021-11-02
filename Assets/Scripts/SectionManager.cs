@@ -26,6 +26,9 @@ public class SectionManager : MonoBehaviour
     HangerController hanger;
     ServoController servoController;
     Noising noise;
+    ServoServer server;
+
+    public bool onceFlag = false;
 
     // 音が大きくなっていく間隔時間
     [SerializeField]
@@ -39,15 +42,20 @@ public class SectionManager : MonoBehaviour
         gazeguidance = _GazeGuide.GetComponent<Gazeguidance>();
         servoController = _ServoController.GetComponent<ServoController>();
         noise = _Noise.GetComponent<Noising>();
+        server = this.GetComponent<ServoServer>();
     }
 
     void Start() {
         quoteManager = this.GetComponent<QuoteManager>();
-        SetCurrentState(State.Intro);
     }
 
     void Update() {
-        
+        if(!onceFlag){
+            if(server.playFlag){
+                SetCurrentState(State.Intro);
+                onceFlag = true;
+            }
+        }
     }
 
     // 他スクリプトから参照する時

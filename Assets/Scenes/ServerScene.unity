@@ -219,7 +219,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 9111c555d18502b429056c4b7bcc4048, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 6567b3f981d04b744bfc96b6d468794a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f90eb5784e75eb04ba7d3abca90b3bfa, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -329,7 +329,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 9111c555d18502b429056c4b7bcc4048, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 6567b3f981d04b744bfc96b6d468794a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f90eb5784e75eb04ba7d3abca90b3bfa, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -540,8 +540,7 @@ MonoBehaviour:
   serverName: 
   inComingPort: 0
   playFlag: 0
-  volFlag: 0
-  pitchFlag: 0
+  changeFlag: 0
   type: 0
   volume: 0
   pitch: 0
